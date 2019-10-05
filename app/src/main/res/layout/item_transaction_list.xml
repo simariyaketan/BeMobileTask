@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="transaction"
+            type="com.bemobile.model.Transaction" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_50"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_marginBottom="@dimen/dimen_10"
+        android:elevation="0dp"
+        android:orientation="vertical"
+        app:cardCornerRadius="@dimen/dimen_10">
+
+        <RelativeLayout
+            android:id="@+id/layoutProductItem"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50"
+            android:background="@color/color_ffffff"
+            android:padding="@dimen/dimen_10">
+
+            <TextView
+                android:id="@+id/txtProductName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_10"
+                android:layout_toLeftOf="@+id/txtProductPrice"
+                android:text="@{transaction.sku}"
+                android:textColor="@color/color_363636"
+                android:textSize="@dimen/font_18"></TextView>
+
+            <TextView
+                android:id="@+id/txtProductPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/font_16"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="@{transaction.currency +` ` + transaction.amount}"
+                android:textColor="@color/color_363636"></TextView>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

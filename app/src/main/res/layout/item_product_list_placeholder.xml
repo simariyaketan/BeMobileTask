@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_50"
+    android:layout_marginRight="@dimen/dimen_10"
+    android:layout_marginLeft="@dimen/dimen_10"
+    android:layout_marginBottom="@dimen/dimen_10"
+    android:elevation="0dp"
+    app:cardCornerRadius="@dimen/dimen_10"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_50"
+        android:background="@color/color_ffffff"
+        android:padding="@dimen/dimen_10">
+
+        <View
+            android:id="@+id/viewProductName"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/font_18"
+            android:background="@color/color_dddddd"
+            android:layout_toLeftOf="@+id/viewProductPrice"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:layout_centerVertical="true"
+            ></View>
+
+        <View
+            android:id="@+id/viewProductPrice"
+            android:layout_width="@dimen/dimen_50"
+            android:layout_height="@dimen/font_18"
+            android:layout_alignParentRight="true"
+            android:background="@color/color_dddddd"
+            android:layout_centerVertical="true"></View>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
