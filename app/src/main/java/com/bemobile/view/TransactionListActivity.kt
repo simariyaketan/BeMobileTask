@@ -33,7 +33,6 @@ class TransactionListActivity : AppCompatActivity() {
         activityTransactionListBinding.layoutHeader.txtHeaderTitle.setText(productName)
         activityTransactionListBinding.txtTotalAmount.setText("EUR " + totalAmount)
 
-        Log.d("transactionArray","transactionArray = "+ Common.transactionArray.size)
         var transactionListAdapter : TransactionListAdapter = TransactionListAdapter(Common.transactionArray)
         activityTransactionListBinding.recycleViewTransactionList.adapter = transactionListAdapter
         transactionListAdapter.notifyItemChanged(Common.transactionArray.size)

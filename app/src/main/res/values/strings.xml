@@ -3,4 +3,5 @@
     <string name="product">product</string>
 
     <string name="no_internet_connection">Oops! No internet connection.</string>
+    <string name="refresh">Refresh</string>
 </resources>

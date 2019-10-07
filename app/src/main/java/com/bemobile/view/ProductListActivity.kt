@@ -53,13 +53,32 @@ class ProductListActivity : AppCompatActivity(), ProductListInterfaceView,
         activityProductListBinding.recycleViewProductList.adapter = productListAdapter
         productListAdapter.setProductListClickListner(this)
 
+        activityProductListBinding.layoutNoInternetConnection.txtRefreshButton.setOnClickListener({
+            getAllProductList()
+        })
+
+        getAllProductList()
+
+    }
+
+    fun getAllProductList() {
         if (Common.isNetwordAvailable(this)) {
+
+            activityProductListBinding.shimmerViewProductList.startShimmerAnimation()
+            activityProductListBinding.shimmerViewProductList.visibility = View.VISIBLE
+            activityProductListBinding.layoutNoInternetConnection.layoutNoInternetConnectionMain.visibility =
+                View.GONE
+
             Handler().postDelayed({
                 getProductRates()
-            },200)
+            }, 200)
 
         } else {
-            Common.ShowToast(this, getString(R.string.no_internet_connection))
+            activityProductListBinding.shimmerViewProductList.stopShimmerAnimation()
+            activityProductListBinding.shimmerViewProductList.visibility = View.GONE
+            activityProductListBinding.layoutNoInternetConnection.layoutNoInternetConnectionMain.visibility =
+                View.VISIBLE
+            Common.ShowToast(this@ProductListActivity, getString(R.string.no_internet_connection))
         }
     }
 
@@ -100,7 +119,7 @@ class ProductListActivity : AppCompatActivity(), ProductListInterfaceView,
                         var productAmount: Float = pData.productTotalPrice?.toFloat()!!
                         var productTotalAmount = amount?.plus(productAmount)
                         /*Add Transaction Value*/
-                        var transaction : Transaction = Transaction()
+                        var transaction: Transaction = Transaction()
                         transaction.sku = product.productName
                         transaction.amount = product.productPrice
                         transaction.currency = product.currency
@@ -132,21 +151,21 @@ class ProductListActivity : AppCompatActivity(), ProductListInterfaceView,
     }
 
     /*Price Converter*/
-    fun ratesConverterEur(rate: String,amount: Float): Float {
-        loop@for (ratData in ratesArrayList) {
+    fun ratesConverterEur(rate: String, amount: Float): Float {
+        loop@ for (ratData in ratesArrayList) {
             if (rate.equals(ratData.from) && ratData.to.equals("EUR")) {
-                var rateAmount:Float = ratData.rate!!.toFloat()
+                var rateAmount: Float = ratData.rate!!.toFloat()
                 ratesCurrency = amount * rateAmount
                 break@loop
             }
         }
 
-        if(ratesCurrency == 0.0f){
-            loop@for (rData in ratesArrayList) {
+        if (ratesCurrency == 0.0f) {
+            loop@ for (rData in ratesArrayList) {
                 if (rate.equals(rData.from)) {
-                    var rateAmount:Float = rData.rate!!.toFloat()
+                    var rateAmount: Float = rData.rate!!.toFloat()
                     var amount = amount * rateAmount
-                    ratesConverterEur(rData.to!!,amount)
+                    ratesConverterEur(rData.to!!, amount)
                     break@loop
                 }
             }
@@ -181,20 +200,24 @@ class ProductListActivity : AppCompatActivity(), ProductListInterfaceView,
 
     /*Api Handler Error*/
     private fun handleError(error: Throwable) {
-        Common.ShowErrorMessage(this, error.message!!, null)
+        Common.ShowErrorMessage(
+            this,
+            error.message!!,
+            activityProductListBinding.layoutNoInternetConnection.layoutNoInternetConnectionMain
+        )
         activityProductListBinding.shimmerViewProductList.visibility = View.GONE
     }
 
     /*Click item row function*/
     override fun ProductTransctaionPage(position: Int) {
 
-        var product:Product = productArrayList.get(position)
+        var product: Product = productArrayList.get(position)
 
         Common.transactionArray.addAll(product.transationArray)
 
-        var pti = Intent(this,TransactionListActivity::class.java)
-        pti.putExtra("product_name",product.productName)
-        pti.putExtra("totla_amount",product.productTotalPrice)
+        var pti = Intent(this, TransactionListActivity::class.java)
+        pti.putExtra("product_name", product.productName)
+        pti.putExtra("totla_amount", product.productTotalPrice)
         startActivity(pti)
     }
 }
